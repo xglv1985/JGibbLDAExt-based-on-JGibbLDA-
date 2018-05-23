@@ -32,6 +32,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -140,7 +143,33 @@ public class Inferencer {
 	
 	public void showInferencedTopicOfUnseenDoc(){
 		if(null != newModel){
-			
+			System.out.println("inferenced topic as follows:");
+			for(int i = 0; i <= newModel.testDataset.docs.length - 1; i++){
+				double inferencedTopicProb = newModel.theta[i][0];
+				int inferencedTopic = 0;
+				for(int j = 0; j <= newModel.theta[i].length - 1; j++){
+					if(newModel.theta[i][j] > inferencedTopicProb){
+						inferencedTopicProb = newModel.theta[i][j];
+						inferencedTopic = j; 
+					}
+				}
+				System.out.println("inferenced topic of document " + i + "\n" + newModel.testDataset.docs[i].rawStr + "\nis topic " + inferencedTopic + " : " + inferencedTopicProb);
+				List<Pair> wordsProbsList = new ArrayList<Pair>(); 
+				for (int w = 0; w < trnModel.V; w++){
+					Pair p = new Pair(w, trnModel.phi[inferencedTopic][w], false);
+					
+					wordsProbsList.add(p);
+				}
+				
+				Collections.sort(wordsProbsList);
+				
+				for (int k = 0; k < trnModel.twords; k++){
+					if (globalDict.contains((Integer)wordsProbsList.get(k).first)){
+						String word = globalDict.getWord((Integer)wordsProbsList.get(k).first);
+						System.out.print(word + " ");
+					}
+				}
+			}
 		}
 		else{
 			System.out.println("Not in inferenced phase!");

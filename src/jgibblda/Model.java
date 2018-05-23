@@ -68,6 +68,8 @@ public class Model {
 	public int modelStatus; 		//see Constants class for status of model
 	public LDADataset data;			// link to a dataset
 	
+	public LDADataset testDataset;  // link to test dataset
+	
 	public int M; //dataset size (i.e., number of docs)
 	public int V; //vocabulary size
 	public int K; //number of topics
@@ -630,13 +632,13 @@ public class Model {
 		if (!init(option))
 			return false;
 		
-		LDADataset dataset = LDADataset.readDataSet(dir + File.separator + dfile, trnModel.data.localDict);
-		if (dataset == null){
+		testDataset = LDADataset.readDataSet(dir + File.separator + dfile, trnModel.data.localDict);
+		if (testDataset == null){
 			System.out.println("Fail to read dataset!\n");
 			return false;
 		}
 		
-		return initNewModel(option, dataset , trnModel);
+		return initNewModel(option, testDataset , trnModel);
 	}
 	
 	/**

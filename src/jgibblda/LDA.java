@@ -55,7 +55,7 @@ public class LDA {
 				
 				Model newModel = inferencer.inference();
 				
-				
+				inferencer.showInferencedTopicOfUnseenDoc();
 			
 				//inference≤ª¥Ú”°
 //				for (int i = 0; i < newModel.phi.length; ++i){
