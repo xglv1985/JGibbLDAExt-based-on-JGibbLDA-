@@ -143,7 +143,7 @@ public class Inferencer {
 	
 	public void showInferencedTopicOfUnseenDoc(){
 		if(null != newModel){
-			System.out.println("inferenced topic as follows:");
+			System.out.println("\ninferenced topic as follows:\n");
 			for(int i = 0; i <= newModel.testDataset.docs.length - 1; i++){
 				double inferencedTopicProb = newModel.theta[i][0];
 				int inferencedTopic = 0;
@@ -153,7 +153,7 @@ public class Inferencer {
 						inferencedTopic = j; 
 					}
 				}
-				System.out.println("inferenced topic of document " + i + "\n" + newModel.testDataset.docs[i].rawStr + "\nis topic " + inferencedTopic + " : " + inferencedTopicProb);
+				System.out.println("unseen document " + i + "\n" + newModel.testDataset.docs[i].rawStr + "\nis inferenced to belong to topic " + inferencedTopic + " : " + inferencedTopicProb);
 				List<Pair> wordsProbsList = new ArrayList<Pair>(); 
 				for (int w = 0; w < trnModel.V; w++){
 					Pair p = new Pair(w, trnModel.phi[inferencedTopic][w], false);
@@ -169,6 +169,7 @@ public class Inferencer {
 						System.out.print(word + " ");
 					}
 				}
+				System.out.print("\n\n");
 			}
 		}
 		else{
